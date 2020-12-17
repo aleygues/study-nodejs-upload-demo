@@ -1,0 +1,14 @@
+{
+	"id": "b317c7a6-cff3-41b7-9440-2f64eb4d3251",
+	"name": "Simple API",
+	"values": [
+		{
+			"key": "apiUrl",
+			"value": "http://localhost:3002/api",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-12-16T14:54:54.079Z",
+	"_postman_exported_using": "Postman/7.36.0"
+}

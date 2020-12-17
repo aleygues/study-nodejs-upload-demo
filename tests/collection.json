@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "25d83b52-4107-4be6-9ce9-04289216f049",
+		"name": "Simple API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9859417-c8a6-4e18-abf9-b284811f476d",
+						"exec": [
+							"pm.collectionVariables.set('userEmail', \"aurelien.leygues@toto.fr\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bec4c58-4a36-46d8-9a4b-2ade2ed226ed",
+						"exec": [
+							"pm.test(\"Mutation succeed\", () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.nested.property('data.authenticate.token');",
+							"    pm.collectionVariables.set('token', jsonData.data.authenticate.token);",
+							"});",
+							"",
+							"pm.test(\"Emails match\", () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.authenticate.user.email === pm.collectionVariables.get('userEmail')).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation login($email: String!) {\n  authenticate(password: \"secret\", email: $email) {\n    token\n    user {\n      email\n    }\n  }\n}\n",
+						"variables": "{\n    \"email\": \"{{userEmail}}\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}",
+					"host": [
+						"{{apiUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get me",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "54209148-c0b8-4c6c-a37f-8d2ae4eebf42",
+						"exec": [
+							"pm.test(\"Emails match\", () => {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.authenticatedUser.email === pm.collectionVariables.get('userEmail')).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ff40cc37-7dc5-44d3-a782-9e015f0f5c6b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query getMe {\n  authenticatedUser {\n      email\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}",
+					"host": [
+						"{{apiUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "dd0e9cf6-c2be-486e-be74-01af3309d5ec",
+			"key": "userEmail",
+			"value": ""
+		},
+		{
+			"id": "459a77d5-7953-4c72-9a8e-6f8ecd92cd79",
+			"key": "token",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
