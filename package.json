@@ -1,17 +1,16 @@
 {
-  "name": "login-demo",
+  "name": "upload-back-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc-watch --onSuccess 'node ./dist/index.js'",
+    "start": "tsc-watch --onSuccess 'node --inspect ./dist/index.js'",
     "test": "newman run tests/collection.json -e tests/environment.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/bcrypt": "^3.0.0",
     "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.14",
     "newman": "^5.2.1",
@@ -22,15 +21,18 @@
     "@typegoose/typegoose": "^7.4.5",
     "apollo-server": "^2.19.0",
     "apollo-server-express": "^2.19.0",
-    "bcrypt": "^5.0.0",
     "class-validator": "^0.12.2",
-    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphql": "^15.4.0",
+    "graphql-upload": "^11.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "~5.10.0",
+    "mongoose": "5.10.18",
     "reflect-metadata": "^0.1.13",
+    "tmp": "^0.2.1",
     "type-graphql": "^1.1.1"
+  },
+  "resolutions": {
+    "fs-capacitor": "^6.2.0"
   }
 }
