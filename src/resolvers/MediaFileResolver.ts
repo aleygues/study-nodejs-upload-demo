@@ -11,9 +11,7 @@ export class MediaFileResolver {
     @Mutation(() => MediaFile)
     public async createMediaFile(@Arg('data', () => MediaFileInput) data: MediaFileInput): Promise<MediaFile> {
         const file = await data.file;
-        console.log(file);
-        const tmpDir = tmp.dirSync();
-        const path = `${tmpDir.name}/${file.file.filename}`;
+        const path = `${process.cwd()}/storage/${file.file.filename}`;
 
         const handleWirte = new Promise((resolve, reject) => {
             file.file.createReadStream()
