@@ -9,7 +9,7 @@ import { Router } from './router';
 import express from 'express';
 
 (async () => {
-    await mongoose.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "test" });
+    await mongoose.connect('mongodb://db:27017/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "test" });
 
     const schema = await buildSchema({
         resolvers: [MessageResolver, MediaFileResolver]
