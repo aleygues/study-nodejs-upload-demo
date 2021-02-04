@@ -3,8 +3,7 @@ import { MediaFile, MediaFileInput } from "../entities/MediaFile";
 import { Arg, Mutation, Resolver } from "type-graphql";
 import { createWriteStream } from "fs";
 import * as tmp from "tmp";
-
-export const mediaFiles: MediaFile[] = [];
+import { getModelForClass } from "@typegoose/typegoose";
 
 @Resolver(MediaFile)
 export class MediaFileResolver {
@@ -22,17 +21,17 @@ export class MediaFileResolver {
 
         try {
             await handleWirte;
+            const model = getModelForClass(MediaFile);
+            const entry = await model.create({
+                filename: file.file.filename,
+                publicUrl: '',
+                path
+            });
+            entry.publicUrl = `http://localhost:3002/images/${entry._id}`;
+            return entry.save();
         } catch (e) {
             console.error(e);
+            throw new Error('Upload failed');
         }
-
-        let result;
-        mediaFiles.push(result = {
-            filename: file.file.filename,
-            publicUrl: `http://localhost:3002/images/${mediaFiles.length}`,
-            path
-        });
-
-        return result;
     }
 }
