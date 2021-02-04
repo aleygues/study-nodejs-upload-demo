@@ -29,6 +29,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "5.10.18",
     "reflect-metadata": "^0.1.13",
+    "sharp": "^0.27.1",
     "tmp": "^0.2.1",
     "type-graphql": "^1.1.1"
   },
